@@ -1,0 +1,8 @@
+{
+  "clangd.fallbackFlags": [
+    "-x",
+    "c",
+    "-std=c23",
+    //"--target=x86_64-w64-windows-gnu"
+  ]
+}
