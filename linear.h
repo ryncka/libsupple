@@ -4,12 +4,14 @@
 
 #include <stdint.h>
 
+// entry_t is a pointer to struct entry
 typedef struct entry *entry_t;
 struct entry {
   uintptr_t *item;
   entry_t    link;
 };
 
+// orbit_t is a pointer to struct orbit
 typedef struct orbit *orbit_t;
 struct orbit {
   uintptr_t *item;
@@ -17,41 +19,36 @@ struct orbit {
   orbit_t    right;
 };
 
-// entry_new creates a new entry with the given link and item.
-// Returns a pointer to the newly created entry or nullptr if memory alloc
-// fails.
+// Creates a new entry node and returns a pointer to it
 entry_t entry_new(const entry_t link, uintptr_t *item);
 
-// entry_walk traverses the linked list starting from self, invoking the
-// callback for each entry. Returns the number of entries traversed.
+// Walk through the linked list starting from 'self' and apply 'callback' to
+// each item Returns the number of entries walked
 uint16_t entry_walk(const entry_t self, void (*callback)(uintptr_t *item));
 
-// entry_destroy deallocates memory for the entire linked list starting from
-// root. Returns the number of entries deallocated.
+// Destroy the linked list starting from 'root' and free memory
+// Returns the number of entries destroyed
 uint16_t entry_destroy(entry_t root);
 
-// orbit_new creates a new orbit with the given link and item.
-// If link is not nullptr, updates link's right child to point to the new orbit.
-// Returns a pointer to the newly created orbit or nullptr if memory alloc
-// fails.
+// Creates a new orbit node and returns a pointer to it
 orbit_t orbit_new(orbit_t link, uintptr_t *item);
 
-// orbit_walk traverses the binary tree starting from self, invoking the
-// callback for each orbit in rightward direction. Returns the number of orbits
-// traversed.
+// Walk through the linked list starting from 'self' and apply 'callback' to
+// each item Returns the number of orbits walked
 uint16_t orbit_walk(const orbit_t self, void (*callback)(uintptr_t *item));
 
-// orbit_walklt traverses the binary tree starting from self, invoking the
-// callback for each orbit in leftward direction. Returns the number of orbits
-// traversed.
+// Walk through the linked list starting from 'self' and apply 'callback' to
+// each item, moving leftwards (towards left orbits). Returns the number of
+// orbits walked.
 uint16_t orbit_walklt(const orbit_t self, void (*callback)(uintptr_t *item));
 
-// orbit_destroy deallocates memory for the binary tree starting from root in
-// rightward direction. Returns the number of orbits deallocated.
+// Destroy the linked list starting from 'root' and free memory
+// Returns the number of orbits destroyed
 uint16_t orbit_destroy(orbit_t root);
 
-// orbit_destroylt deallocates memory for the binary tree starting from root in
-// leftward direction. Returns the number of orbits deallocated.
+// Destroy the linked list starting from 'root' and free memory,
+// moving leftwards (towards left orbits).
+// Returns the number of orbits destroyed.
 uint16_t orbit_destroylt(orbit_t root);
 
 #endif  // !LIBSUPPLE_LINEAR_H

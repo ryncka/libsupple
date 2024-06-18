@@ -41,12 +41,13 @@ bool stack_push(stack_t self, uintptr_t* item) {
 
 bool stack_push_dynamic(stack_t self, uintptr_t* item) {
   if (stack_full(self)) {
+    // allocate new elements array
     const uint32_t new_length   = self->length * 2;
     uintptr_t**    new_elements = malloc(sizeof(uintptr_t*) * new_length);
     if (new_elements == nullptr) {
       return false;
     }
-    // Copy old-element to new-element
+    // copy existing elements to the new array
     for (uint32_t i = 0; i < self->length; i++) {
       new_elements[i] = self->elements[i];
     }

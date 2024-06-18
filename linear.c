@@ -42,6 +42,7 @@ orbit_t orbit_new(orbit_t link, uintptr_t *item) {
   if (orbit == nullptr) {
     return nullptr;
   }
+  // if there's a link to connect
   if (link != nullptr) {
     orbit->left = link;
     link->right = orbit;
